@@ -1,8 +1,9 @@
 import { DEPLOYED_CONTRACT_ADDRESS, CONTRACT_ABI } from "@/config/web3";
-import { ethers, Contract } from "ethers";
+import { ethers } from "ethers";
+import { utils, Provider, Contract, Web3Provider } from "zksync-web3";
 
 export const getSigner = async () => {
-  const provider = new ethers.BrowserProvider(window.ethereum);
+  const provider = new Web3Provider(window.ethereum);
   return await provider.getSigner();
 };
 
@@ -14,13 +15,33 @@ export const getContract = async (
   return new Contract(contractAddress, abi, signer);
 };
 
-export const createArchive = async (imgString: string, url: string) => {
+export const createArchiveByWallet = async (pHash: string) => {
+  const WALLET_ADDRESS = process.env.NEXT_PUBLIC_WALLET_ADDRESS as string;
+  const provider = new Provider(process.env.NEXT_PUBLIC_ZKSYNC_RPC_URL);
   const contract = await getContract(DEPLOYED_CONTRACT_ADDRESS, CONTRACT_ABI);
-  const bytes32Hash = ethers.id(url);
-  return contract.setArchive(bytes32Hash, url);
-};
+  const paymasterBalance = await provider.getBalance(WALLET_ADDRESS);
 
-export const getArchives = async () => {
-  const contract = await getContract(DEPLOYED_CONTRACT_ADDRESS, CONTRACT_ABI);
-  return await contract.getArchives();
+  if (paymasterBalance.eq(0)) {
+    return;
+  }
+
+  const paymasterParams = utils.getPaymasterParams(WALLET_ADDRESS, {
+    type: "General",
+    innerInput: new Uint8Array(),
+  });
+
+  try {
+    if (contract) {
+      const tx = await contract.setArchive(pHash, {
+        customData: {
+          paymasterParams: paymasterParams,
+          gasPerPubdata: utils.DEFAULT_GAS_PER_PUBDATA_LIMIT,
+        },
+      });
+
+      await tx.wait();
+    }
+  } catch (error: unknown) {
+    console.error(error);
+  }
 };
