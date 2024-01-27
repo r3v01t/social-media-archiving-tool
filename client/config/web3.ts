@@ -1,5 +1,5 @@
-export const DEPLOYED_CONTRACT_ADDRESS =
-  "0xB91aA23Ae4197A375d704b72a7d0B560148f6B92";
+export const DEPLOYED_CONTRACT_ADDRESS = process.env
+  .NEXT_PUBLIC_DEPLOYED_CONTRACT_ADDRESS as string;
 export const CONTRACT_ABI = [
   {
     inputs: [],
