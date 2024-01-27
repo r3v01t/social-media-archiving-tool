@@ -2,14 +2,14 @@
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { polygonZkEvmTestnet } from "wagmi/chains";
+import { zkSyncSepoliaTestnet } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
 export default function RainbowkitProvider({
   children,
 }: React.PropsWithChildren) {
   const { chains, publicClient } = configureChains(
-    [polygonZkEvmTestnet],
+    [zkSyncSepoliaTestnet],
     [publicProvider()]
   );
 
