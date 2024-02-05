@@ -1,5 +1,5 @@
-export const DEPLOYED_CONTRACT_ADDRESS = process.env
-  .NEXT_PUBLIC_DEPLOYED_CONTRACT_ADDRESS as string;
+export const DEPLOYED_CONTRACT_ADDRESS = import.meta.env
+  .VITE_DEPLOYED_CONTRACT_ADDRESS as string;
 export const CONTRACT_ABI = [
   {
     inputs: [],

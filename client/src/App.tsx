@@ -1,9 +1,10 @@
-"use client";
 import React, { useState } from "react";
 import { Button, Title, Subtitle } from "@tremor/react";
 import { imageFromBuffer, getImageData } from "@canvas/image";
 import { bmvbhash } from "blockhash-core";
-import { createArchiveByWallet } from "@/services/web3";
+import { createArchiveByWallet } from "./services/web3.service";
+import { Buffer } from "buffer";
+window.Buffer = Buffer;
 
 export default function Home() {
   const [file, setFile] = useState<File>();
@@ -17,11 +18,11 @@ export default function Home() {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
       const imageData = await getImageData(await imageFromBuffer(buffer));
-      let { width, height, data } = imageData!;
+      const { width, height, data } = imageData!;
       const hexHash = bmvbhash({ width, height, data }, 8);
       setHash(hexHash);
       createArchiveByWallet(hexHash);
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error(e);
     }
   };

@@ -1,4 +1,3 @@
-"use client";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
@@ -15,7 +14,7 @@ export default function RainbowkitProvider({
 
   const { connectors } = getDefaultWallets({
     appName: "Web Archiver dApp",
-    projectId: process.env.NEXT_PUBLIC_PROJECT_ID as string,
+    projectId: import.meta.env.VITE_PROJECT_ID as string,
     chains,
   });
 

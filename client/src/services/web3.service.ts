@@ -1,4 +1,4 @@
-import { DEPLOYED_CONTRACT_ADDRESS, CONTRACT_ABI } from "@/config/web3";
+import { DEPLOYED_CONTRACT_ADDRESS, CONTRACT_ABI } from "../config/web3.config";
 import { ethers } from "ethers";
 import { utils, Provider, Contract, Web3Provider } from "zksync-web3";
 
@@ -16,11 +16,15 @@ export const getContract = async (
 };
 
 export const createArchiveByWallet = async (pHash: string) => {
-  const WALLET_ADDRESS = process.env.NEXT_PUBLIC_WALLET_ADDRESS as string;
-  const provider = new Provider(process.env.NEXT_PUBLIC_ZKSYNC_RPC_URL);
+  const WALLET_ADDRESS = import.meta.env.VITE_WALLET_ADDRESS as string;
+  console.log("0");
+  const provider = new Provider(import.meta.env.VITE_ZKSYNC_RPC_URL);
+  console.log("1");
   const contract = await getContract(DEPLOYED_CONTRACT_ADDRESS, CONTRACT_ABI);
+  console.log("2", provider);
+  console.log(WALLET_ADDRESS);
   const paymasterBalance = await provider.getBalance(WALLET_ADDRESS);
-
+  console.log("3");
   if (paymasterBalance.eq(0)) {
     return;
   }
@@ -32,7 +36,8 @@ export const createArchiveByWallet = async (pHash: string) => {
 
   try {
     if (contract) {
-      const tx = await contract.setArchive(pHash, {
+      const formattedPHash = ethers.utils.formatBytes32String("test");
+      const tx = await contract.setArchive(formattedPHash, {
         customData: {
           paymasterParams: paymasterParams,
           gasPerPubdata: utils.DEFAULT_GAS_PER_PUBDATA_LIMIT,
