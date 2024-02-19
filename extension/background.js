@@ -6,7 +6,7 @@ chrome.action.onClicked.addListener(function () {
   chrome.tabs.captureVisibleTab(null, { format: "png" }, function (dataUrl) {
     chrome.downloads.download({
       url: dataUrl,
-      filename: "screenshot.png",
+      filename: `${new Date().getTime()}.png`,
       saveAs: true,
     });
   });
