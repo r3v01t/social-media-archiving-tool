@@ -10,14 +10,25 @@ import "@matterlabs/zksync-contracts/l2/system-contracts/Constants.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Wallet is IPaymaster, Ownable {
-    address allowedContract;
+    address public smatContract;
+    mapping(address => bool) public allowList;
+
+    event allowListUpdate(address indexed _user, bool _status);
+    event smatContractUpdate(address indexed _contract);
 
     constructor(address _contract) {
-        allowedContract = _contract;
+        smatContract = _contract;
+        allowList[msg.sender] = true;
     }
 
-    function updatedAllowedContractAddress(address _contract) public onlyOwner {
-        allowedContract = _contract;
+    function updateAllowedContractAddress(address _contract) public onlyOwner {
+        smatContract = _contract;
+        emit smatContractUpdate(_contract);
+    }
+
+    function updateAlowList(address _user, bool _status) public onlyOwner {
+        allowList[msg.sender] = false;
+        emit allowListUpdate(_user, _status);
     }
 
     modifier onlyBootloader() {
@@ -51,9 +62,12 @@ contract Wallet is IPaymaster, Ownable {
         );
         if (paymasterInputSelector == IPaymasterFlow.general.selector) {
             // make sure the paymaster is only used for transactions involving the app
+            address _contract = address(uint160(_transaction.to));
+            address userAddress = address(uint160(_transaction.from));
+            bool userInAllowList = allowList[userAddress];
             require(
-                address(uint160(uint256(_transaction.to))) == allowedContract,
-                "Transactions can only be processed for social-media-archiving-tool smart contract"
+                _contract == smatContract && userInAllowList,
+                "Paymaster can not be used for this transaction."
             );
             // Note, that while the minimal amount of ETH needed is tx.gasPrice * tx.gasLimit,
             // neither paymaster nor account are allowed to access this context variable.
