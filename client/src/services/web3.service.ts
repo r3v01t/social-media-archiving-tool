@@ -34,6 +34,7 @@ export const createArchiveByWallet = async (
     if (contract) {
       const formattedPHash = ethers.utils.formatBytes32String(pHash);
       const [timestamp, ipAddress, encodedWebPageUrl] = fileName.split("#");
+
       // TODO: toasts if this results in undefined (filename is not correct)
       const formattedIPAddress = ethers.utils.formatBytes32String(ipAddress);
 
@@ -41,7 +42,7 @@ export const createArchiveByWallet = async (
         timestamp,
         formattedIPAddress,
         formattedPHash,
-        encodedWebPageUrl,
+        encodedWebPageUrl.split(".")[0],
         {
           customData: {
             gasPerPubdata: utils.DEFAULT_GAS_PER_PUBDATA_LIMIT,
