@@ -8,7 +8,10 @@ export const getSigner = async () => {
 };
 
 // TODO: proper type for abi
-export const getContract = async (contractAddress: string, abi: any) => {
+export const getContract = async (
+  contractAddress: string,
+  abi: typeof CONTRACT_ABI
+) => {
   const signer = await getSigner();
   return new Contract(contractAddress, abi, signer);
 };
