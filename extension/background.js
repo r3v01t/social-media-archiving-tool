@@ -12,7 +12,7 @@ chrome.action.onClicked.addListener(async function () {
     const ipAddress = data.ip;
 
     const timestamp = new Date().getTime();
-    const filename = `${timestamp}-${ipAddress}-${btoa(webpageUrl)}.png`;
+    const filename = `${timestamp}#${ipAddress}#${btoa(webpageUrl)}.png`;
 
     const dataUrl = await chrome.tabs.captureVisibleTab(null, {
       format: "png",
