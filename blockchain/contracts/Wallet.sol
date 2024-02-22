@@ -27,7 +27,7 @@ contract Wallet is IPaymaster, Ownable {
     }
 
     function updateAlowList(address _user, bool _status) public onlyOwner {
-        allowList[msg.sender] = false;
+        allowList[msg.sender] = _status;
         emit allowListUpdate(_user, _status);
     }
 
