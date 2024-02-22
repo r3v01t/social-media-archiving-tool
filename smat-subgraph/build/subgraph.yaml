@@ -1,0 +1,26 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: WebArchive
+    network: zksync-era-sepolia
+    source:
+      address: "0x5EB9405aD3a6d0D664091348A9B00cFcD0e3C9b8"
+      abi: WebArchive
+      startBlock: 828622
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ArchiveCreated
+      abis:
+        - name: WebArchive
+          file: WebArchive/abis/WebArchive.json
+      eventHandlers:
+        - event: ArchiveCreated(indexed address,uint256,bytes32,bytes32,string)
+          handler: handleArchiveCreated
+      file: WebArchive/WebArchive.wasm
