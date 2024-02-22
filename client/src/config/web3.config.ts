@@ -1,10 +1,16 @@
 export const DEPLOYED_CONTRACT_ADDRESS = import.meta.env
   .VITE_DEPLOYED_CONTRACT_ADDRESS as string;
+
 export const CONTRACT_ABI = [
   {
     inputs: [],
     stateMutability: "nonpayable",
     type: "constructor",
+  },
+  {
+    inputs: [],
+    name: "AlreadyArchived",
+    type: "error",
   },
   {
     anonymous: false,
@@ -17,15 +23,27 @@ export const CONTRACT_ABI = [
       },
       {
         indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+      {
+        indexed: false,
         internalType: "bytes32",
-        name: "itemHash",
+        name: "ipAddress",
         type: "bytes32",
       },
       {
         indexed: false,
-        internalType: "uint256",
-        name: "timestamp",
-        type: "uint256",
+        internalType: "bytes32",
+        name: "pHash",
+        type: "bytes32",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "webpageUrl",
+        type: "string",
       },
     ],
     name: "ArchiveCreated",
@@ -34,9 +52,48 @@ export const CONTRACT_ABI = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
         internalType: "bytes32",
-        name: "_itemHash",
+        name: "",
         type: "bytes32",
+      },
+    ],
+    name: "archivedItems",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_timestamp",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes32",
+        name: "_ipAddress",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "_pHash",
+        type: "bytes32",
+      },
+      {
+        internalType: "string",
+        name: "_webpageUrl",
+        type: "string",
       },
     ],
     name: "setArchive",
@@ -48,12 +105,12 @@ export const CONTRACT_ABI = [
     inputs: [
       {
         internalType: "address",
-        name: "user",
+        name: "_user",
         type: "address",
       },
       {
         internalType: "bytes32",
-        name: "hash",
+        name: "_hash",
         type: "bytes32",
       },
     ],

@@ -7,24 +7,20 @@ export const getSigner = async () => {
   return await provider.getSigner();
 };
 
-export const getContract = async (
-  contractAddress: string,
-  abi: ethers.Interface | ethers.InterfaceAbi
-) => {
+// TODO: proper type for abi
+export const getContract = async (contractAddress: string, abi: any) => {
   const signer = await getSigner();
   return new Contract(contractAddress, abi, signer);
 };
 
-export const createArchiveByWallet = async (pHash: string) => {
+export const createArchiveByWallet = async (
+  pHash: string,
+  fileName: string
+) => {
   const WALLET_ADDRESS = import.meta.env.VITE_WALLET_ADDRESS as string;
-  console.log("0");
   const provider = new Provider(import.meta.env.VITE_ZKSYNC_RPC_URL);
-  console.log("1");
   const contract = await getContract(DEPLOYED_CONTRACT_ADDRESS, CONTRACT_ABI);
-  console.log("2", provider);
-  console.log(WALLET_ADDRESS);
   const paymasterBalance = await provider.getBalance(WALLET_ADDRESS);
-  console.log("3");
   if (paymasterBalance.eq(0)) {
     return;
   }
@@ -36,13 +32,23 @@ export const createArchiveByWallet = async (pHash: string) => {
 
   try {
     if (contract) {
-      const formattedPHash = ethers.utils.formatBytes32String("test");
-      const tx = await contract.setArchive(formattedPHash, {
-        customData: {
-          paymasterParams: paymasterParams,
-          gasPerPubdata: utils.DEFAULT_GAS_PER_PUBDATA_LIMIT,
-        },
-      });
+      const formattedPHash = ethers.utils.formatBytes32String(pHash);
+      const [timestamp, ipAddress, encodedWebPageUrl] = fileName.split("#");
+      // TODO: toasts if this results in undefined (filename is not correct)
+      const formattedIPAddress = ethers.utils.formatBytes32String(ipAddress);
+
+      const tx = await contract.setArchive(
+        timestamp,
+        formattedIPAddress,
+        formattedPHash,
+        encodedWebPageUrl,
+        {
+          customData: {
+            gasPerPubdata: utils.DEFAULT_GAS_PER_PUBDATA_LIMIT,
+            paymasterParams: paymasterParams,
+          },
+        }
+      );
 
       await tx.wait();
     }
