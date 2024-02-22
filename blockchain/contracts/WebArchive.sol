@@ -2,40 +2,46 @@
 pragma solidity ^0.8.19;
 
 contract WebArchive {
-    address public owner;
-
-    // map[userAddress][hash] = timeStamp
-    mapping(address => mapping(bytes32 => uint)) internal archivedItemsMap;
+    // map[userAddress][pHash] => doesHashExist
+    mapping(address => mapping(bytes32 => bool)) public archivedItems;
 
     event ArchiveCreated(
         address indexed user,
-        bytes32 itemHash,
-        uint256 timestamp
+        uint256 timestamp,
+        bytes32 ipAddress,
+        bytes32 pHash,
+        string webpageUrl
     );
 
     error AlreadyArchived();
 
-    constructor() {
-        owner = msg.sender;
-    }
+    constructor() {}
 
-    function setArchive(bytes32 _itemHash) public {
-        if (archivedItemsMap[msg.sender][_itemHash] != 0)
+    function setArchive(
+        uint256 _timestamp,
+        bytes32 _ipAddress,
+        bytes32 _pHash,
+        string memory _webpageUrl
+    ) public {
+        if (archivedItems[msg.sender][_pHash]) {
             revert AlreadyArchived();
+        }
 
-        archivedItemsMap[msg.sender][_itemHash] = block.timestamp;
+        archivedItems[msg.sender][_pHash] = true;
 
-        emit ArchiveCreated(msg.sender, _itemHash, block.timestamp);
+        emit ArchiveCreated(
+            msg.sender,
+            _timestamp,
+            _ipAddress,
+            _pHash,
+            _webpageUrl
+        );
     }
 
-    function verifyHash(address user, bytes32 hash) public view returns (bool) {
-        return archivedItemsMap[user][hash] != 0;
-    }
-
-    function getArchiveTimestamp(
-        address user,
-        bytes32 hash
-    ) public view returns (uint) {
-        return archivedItemsMap[user][hash];
+    function verifyHash(
+        address _user,
+        bytes32 _hash
+    ) public view returns (bool) {
+        return archivedItems[_user][_hash];
     }
 }
