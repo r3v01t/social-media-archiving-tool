@@ -1,0 +1,8 @@
+{
+  "zksync-era-sepolia": {
+    "WebArchive": {
+      "address": "0x5EB9405aD3a6d0D664091348A9B00cFcD0e3C9b8",
+      "startBlock": 828622
+    }
+  }
+}
