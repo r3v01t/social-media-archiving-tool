@@ -1,13 +1,14 @@
 import { DEPLOYED_CONTRACT_ADDRESS, CONTRACT_ABI } from "../config/web3.config";
 import { ethers } from "ethers";
+import { toast } from "react-toastify";
 import { utils, Provider, Contract, Web3Provider } from "zksync-web3";
+import { JSONRPCError } from "../types/errors.types";
 
 export const getSigner = async () => {
   const provider = new Web3Provider(window.ethereum);
   return await provider.getSigner();
 };
 
-// TODO: proper type for abi
 export const getContract = async (
   contractAddress: string,
   abi: typeof CONTRACT_ABI
@@ -38,7 +39,11 @@ export const createArchiveByWallet = async (
       const formattedPHash = ethers.utils.formatBytes32String(pHash);
       const [timestamp, ipAddress, encodedWebPageUrl] = fileName.split("#");
 
-      // TODO: toasts if this results in undefined (filename is not correct)
+      if (!timestamp || !ipAddress || !encodedWebPageUrl) {
+        toast.error(
+          "Invalid filename. Make sure you use our plugin to save the screenshot and dont change the filename. 🚨"
+        );
+      }
       const formattedIPAddress = ethers.utils.formatBytes32String(ipAddress);
 
       const tx = await contract.setArchive(
@@ -55,8 +60,23 @@ export const createArchiveByWallet = async (
       );
 
       await tx.wait();
+      toast.success("Your screenshot was archived successfully! 🔥");
     }
   } catch (error: unknown) {
-    console.error(error);
+    if (error && typeof error === "object") {
+      const _error = error as JSONRPCError;
+
+      if (
+        _error.data.message.includes(
+          "failed paymaster validation. error message: Paymaster can not be used for this transaction."
+        )
+      ) {
+        toast.error("Wallet can not be used for this transaction! 🚨");
+      } else if (_error.reason.includes("Archive already exists")) {
+        toast.warning("This screenshot is already archived! 🙂");
+      } else {
+        toast.error("Archive failed, please try again! 🚨");
+      }
+    }
   }
 };

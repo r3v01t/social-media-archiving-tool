@@ -4,6 +4,7 @@ import { imageFromBuffer, getImageData } from "@canvas/image";
 import { bmvbhash } from "blockhash-core";
 import { createArchiveByWallet } from "./services/web3.service";
 import { Buffer } from "buffer";
+import { toast } from "react-toastify";
 window.Buffer = Buffer;
 
 export default function Home() {
@@ -16,8 +17,7 @@ export default function Home() {
 
     try {
       if (file.type !== "image/png") {
-        // TODO: toasts
-        alert("Invalid file type. Please select a PNG file.");
+        toast.error("Please select a PNG file. 🚨");
         return;
       }
 
@@ -29,7 +29,7 @@ export default function Home() {
 
       createArchiveByWallet(hexHash, file.name);
     } catch (e: unknown) {
-      console.error(e);
+      // console.error(e);
     }
   };
 
