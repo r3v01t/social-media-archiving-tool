@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@tremor/react";
+import { Button, Title } from "@tremor/react";
 import { imageFromBuffer, getImageData } from "@canvas/image";
 import { bmvbhash } from "blockhash-core";
 import { createArchiveByWallet } from "./services/web3.service";
@@ -34,13 +34,11 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen w-screen flex-col items-center justify-around">
+    <main className="mt-20 flex min-h-screen w-screen flex-col items-center justify-start">
       <div className="w-4/5">
-        {" "}
-        {/* Set width to 80% */}
         <form onSubmit={calculatePHash} className="flex flex-col">
           <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-            Upload file
+            <Title>Select screenshot to archive</Title>
           </label>
           <input
             className="block h-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
