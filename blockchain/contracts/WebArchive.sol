@@ -13,8 +13,6 @@ contract WebArchive {
         string webpageUrl
     );
 
-    error AlreadyArchived();
-
     constructor() {}
 
     function setArchive(
@@ -23,9 +21,7 @@ contract WebArchive {
         bytes32 _pHash,
         string memory _webpageUrl
     ) public {
-        if (archivedItems[msg.sender][_pHash]) {
-            revert AlreadyArchived();
-        }
+        require(!archivedItems[msg.sender][_pHash], "Archive already exists");
 
         archivedItems[msg.sender][_pHash] = true;
 
