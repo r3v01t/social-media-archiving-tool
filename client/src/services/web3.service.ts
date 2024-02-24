@@ -67,12 +67,15 @@ export const createArchiveByWallet = async (
       const _error = error as JSONRPCError;
 
       if (
-        _error.data.message.includes(
+        _error.data?.message.includes(
           "failed paymaster validation. error message: Paymaster can not be used for this transaction."
         )
       ) {
         toast.error("Wallet can not be used for this transaction! 🚨");
-      } else if (_error.reason.includes("Archive already exists")) {
+      } else if (
+        _error.data?.message.includes("Archive already exists") ||
+        _error.reason.includes("Archive already exists")
+      ) {
         toast.warning("This screenshot is already archived! 🙂");
       } else {
         toast.error("Archive failed, please try again! 🚨");
