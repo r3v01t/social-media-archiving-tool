@@ -12,6 +12,7 @@ import {
 import { useQuery, gql } from "@apollo/client";
 import { useAccount } from "wagmi";
 import { ArchiveItem } from "../types/query.types";
+import {ethers} from "ethers";
 
 const ARCHIVED_ITEMS_QUREY = gql`
   query ArchivedItems($userAddress: String!) {
@@ -22,6 +23,7 @@ const ARCHIVED_ITEMS_QUREY = gql`
       timestamp
       ipAddress
       transactionHash
+      pHash
     }
   }
 `;
@@ -39,6 +41,14 @@ export default function Dashboard() {
 
     return parsedUrl.length > 55 ? parsedUrl.slice(0, 55) + "..." : parsedUrl;
   };
+
+  const parseIpAddress=(ipAddress:string)=>{
+    return ethers.utils.parseBytes32String(ipAddress)
+  }
+
+  const parsePHash=(pHash:string)=>{
+    return ethers.utils.parseBytes32String(pHash)
+  }
 
   const formatTimestamp = (timestamp: string): string => {
     const timestampInNumber = parseInt(timestamp);
@@ -88,6 +98,8 @@ export default function Dashboard() {
           <TableRow>
             <TableHeaderCell>Timestamp</TableHeaderCell>
             <TableHeaderCell>Webpage URL</TableHeaderCell>
+            <TableHeaderCell>IP Address</TableHeaderCell>
+            <TableHeaderCell>Hash</TableHeaderCell>
           </TableRow>
         </TableHead>
 
@@ -99,6 +111,11 @@ export default function Dashboard() {
                 <a href={parseWebPageUrl(item.webpageUrl)} target="_blank">
                   {parseWebPageUrl(item.webpageUrl, true)}
                 </a>
+              </TableCell>
+              <TableCell>
+                  {parseIpAddress(item.ipAddress)}
+              </TableCell><TableCell>
+                  {parsePHash(item.pHash)}
               </TableCell>
               <TableCell>
                 <a

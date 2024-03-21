@@ -3,4 +3,6 @@ export type ArchiveItem = {
   timestamp: string;
   webpageUrl: string;
   transactionHash: string;
+  pHash:string;
+  ipAddress:string;
 };
