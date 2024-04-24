@@ -1,13 +1,11 @@
-import fastify from "fastify";
 import Fastify from "fastify";
+import route from "./routes/";
 
 const server = Fastify({
   logger: true,
 });
 
-server.get("/", (req, reply) => {
-  return { message: "Backend is up!" };
-});
+server.register(route);
 
 try {
   server.listen({ port: 3333 });
