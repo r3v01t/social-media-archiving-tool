@@ -13,7 +13,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^4.26.2"
+    "dotenv": "^16.4.5",
+    "ethers": "6",
+    "fastify": "^4.26.2",
+    "hardhat": "^2.12.4",
+    "zksync-ethers": "^6.7.0"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
