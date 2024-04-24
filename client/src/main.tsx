@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import "./index.css";
 import RainbowkitProvider from "./providers/RainbowkitProvider.tsx";
 import Layout from "./components/Layout.tsx";
@@ -9,10 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./components/Dashboard.tsx";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
-import Tabs from "./components/Tabs.tsx";
 
 const client = new ApolloClient({
-  uri: "https://api.studio.thegraph.com/query/64131/smat-subgraph/version/latest",
+  uri: import.meta.env.VITE_SUBGRAPH_URI,
   cache: new InMemoryCache(),
 });
 
@@ -23,10 +21,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <ApolloProvider client={client}>
         <BrowserRouter>
           <Layout>
-            <Tabs />
             <Routes>
-              <Route path="/" element={<App />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/" element={<Dashboard />} />
             </Routes>
           </Layout>
         </BrowserRouter>
