@@ -1,4 +1,4 @@
-import { ArchiveCreated as ArchiveCreatedEvent } from "../generated/Contract/Contract"
+import { ArchiveCreated as ArchiveCreatedEvent } from "../generated/WebArchive/WebArchive"
 import { ArchiveCreated } from "../generated/schema"
 
 export function handleArchiveCreated(event: ArchiveCreatedEvent): void {

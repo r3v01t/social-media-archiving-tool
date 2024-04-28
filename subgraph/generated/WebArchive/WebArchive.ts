@@ -148,20 +148,24 @@ export class SetArchiveCall__Inputs {
     this._call = call;
   }
 
+  get _user(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
   get _timestamp(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
+    return this._call.inputValues[1].value.toBigInt();
   }
 
   get _ipAddress(): Bytes {
-    return this._call.inputValues[1].value.toBytes();
-  }
-
-  get _pHash(): Bytes {
     return this._call.inputValues[2].value.toBytes();
   }
 
+  get _pHash(): Bytes {
+    return this._call.inputValues[3].value.toBytes();
+  }
+
   get _webpageUrl(): string {
-    return this._call.inputValues[3].value.toString();
+    return this._call.inputValues[4].value.toString();
   }
 }
 

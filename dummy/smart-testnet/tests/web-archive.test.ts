@@ -8,9 +8,9 @@ import {
 } from "matchstick-as/assembly/index"
 import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts"
 import { ArchiveCreated } from "../generated/schema"
-import { ArchiveCreated as ArchiveCreatedEvent } from "../generated/Contract/Contract"
-import { handleArchiveCreated } from "../src/contract"
-import { createArchiveCreatedEvent } from "./contract-utils"
+import { ArchiveCreated as ArchiveCreatedEvent } from "../generated/WebArchive/WebArchive"
+import { handleArchiveCreated } from "../src/web-archive"
+import { createArchiveCreatedEvent } from "./web-archive-utils"
 
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0

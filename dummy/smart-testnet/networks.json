@@ -1,6 +1,6 @@
 {
   "zksync-era-sepolia": {
-    "Contract": {
+    "WebArchive": {
       "address": "0x2daC2E7884e8E4ff56d549c2aD7774cc2f5D6F1a",
       "startBlock": 1966798
     }

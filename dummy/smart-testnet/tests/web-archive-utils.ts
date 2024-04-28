@@ -1,6 +1,6 @@
 import { newMockEvent } from "matchstick-as"
 import { ethereum, Address, BigInt, Bytes } from "@graphprotocol/graph-ts"
-import { ArchiveCreated } from "../generated/Contract/Contract"
+import { ArchiveCreated } from "../generated/WebArchive/WebArchive"
 
 export function createArchiveCreatedEvent(
   user: Address,
