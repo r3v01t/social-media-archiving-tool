@@ -1,6 +1,5 @@
 [
   { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
-  { "inputs": [], "name": "AlreadyArchived", "type": "error" },
   {
     "anonymous": false,
     "inputs": [
@@ -50,6 +49,7 @@
   },
   {
     "inputs": [
+      { "internalType": "address", "name": "_user", "type": "address" },
       { "internalType": "uint256", "name": "_timestamp", "type": "uint256" },
       { "internalType": "bytes32", "name": "_ipAddress", "type": "bytes32" },
       { "internalType": "bytes32", "name": "_pHash", "type": "bytes32" },

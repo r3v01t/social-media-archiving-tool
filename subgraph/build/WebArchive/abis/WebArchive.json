@@ -5,11 +5,6 @@
     "type": "constructor"
   },
   {
-    "inputs": [],
-    "name": "AlreadyArchived",
-    "type": "error"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -72,6 +67,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "_timestamp",
