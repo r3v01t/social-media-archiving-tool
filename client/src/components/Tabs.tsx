@@ -18,16 +18,16 @@ export default function Tabs() {
             isHome ? activeTabStyle : nonActiveTabStyle
           } w-24 h-7 flex items-center justify-center`}
         >
-          Home
+          Dashboard
         </div>
-        <div
+        {/* <div
           onClick={() => navigate("/dashboard")}
           className={`${
             !isHome ? activeTabStyle : nonActiveTabStyle
           } w-24 h-7 flex items-center justify-center`}
         >
           Dashboard
-        </div>
+        </div> */}
       </div>
     </div>
   );

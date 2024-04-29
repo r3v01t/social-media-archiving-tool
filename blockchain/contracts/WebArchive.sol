@@ -16,17 +16,18 @@ contract WebArchive {
     constructor() {}
 
     function setArchive(
+        address _user,
         uint256 _timestamp,
         bytes32 _ipAddress,
         bytes32 _pHash,
         string memory _webpageUrl
     ) public {
-        require(!archivedItems[msg.sender][_pHash], "Archive already exists");
+        require(!archivedItems[_user][_pHash], "Archive already exists");
 
-        archivedItems[msg.sender][_pHash] = true;
+        archivedItems[_user][_pHash] = true;
 
         emit ArchiveCreated(
-            msg.sender,
+            _user,
             _timestamp,
             _ipAddress,
             _pHash,

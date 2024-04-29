@@ -8,11 +8,6 @@ export const CONTRACT_ABI = [
     type: "constructor",
   },
   {
-    inputs: [],
-    name: "AlreadyArchived",
-    type: "error",
-  },
-  {
     anonymous: false,
     inputs: [
       {
@@ -75,6 +70,11 @@ export const CONTRACT_ABI = [
   },
   {
     inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
       {
         internalType: "uint256",
         name: "_timestamp",

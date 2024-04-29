@@ -45,6 +45,13 @@ export const createArchiveByWallet = async (
         );
       }
       const formattedIPAddress = ethers.utils.formatBytes32String(ipAddress);
+      console.log(
+        "debug",
+        timestamp,
+        formattedIPAddress,
+        formattedPHash,
+        encodedWebPageUrl.split(".")[0]
+      );
 
       const tx = await contract.setArchive(
         timestamp,

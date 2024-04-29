@@ -10,24 +10,24 @@ import "@matterlabs/zksync-contracts/l2/system-contracts/Constants.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Wallet is IPaymaster, Ownable {
-    address public smatContract;
+    address public smartContract;
     mapping(address => bool) public allowList;
 
     event allowListUpdate(address indexed _user, bool _status);
-    event smatContractUpdate(address indexed _contract);
+    event smartContractUpdate(address indexed _contract);
 
     constructor(address _contract) {
-        smatContract = _contract;
+        smartContract = _contract;
         allowList[msg.sender] = true;
     }
 
-    function updateAllowedContractAddress(address _contract) public onlyOwner {
-        smatContract = _contract;
-        emit smatContractUpdate(_contract);
+    function updateSmartContractAddress(address _contract) public onlyOwner {
+        smartContract = _contract;
+        emit smartContractUpdate(_contract);
     }
 
-    function updateAlowList(address _user, bool _status) public onlyOwner {
-        allowList[msg.sender] = _status;
+    function updateAllowList(address _user, bool _status) public onlyOwner {
+        allowList[_user] = _status;
         emit allowListUpdate(_user, _status);
     }
 
@@ -63,10 +63,8 @@ contract Wallet is IPaymaster, Ownable {
         if (paymasterInputSelector == IPaymasterFlow.general.selector) {
             // make sure the paymaster is only used for transactions involving the app
             address _contract = address(uint160(_transaction.to));
-            address userAddress = address(uint160(_transaction.from));
-            bool userInAllowList = allowList[userAddress];
             require(
-                _contract == smatContract && userInAllowList,
+                _contract == smartContract,
                 "Paymaster can not be used for this transaction."
             );
             // Note, that while the minimal amount of ETH needed is tx.gasPrice * tx.gasLimit,

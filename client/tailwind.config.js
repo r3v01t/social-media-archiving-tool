@@ -43,6 +43,7 @@ export default {
         // dark mode
         "dark-tremor": {
           brand: {
+            dark: "#0e141b",
             faint: "#0B1229", // custom
             muted: "#172554", // blue-950
             subtle: "#1e40af", // blue-800

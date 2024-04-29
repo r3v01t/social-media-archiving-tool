@@ -6,13 +6,6 @@
   "icons": {
     "128": "logo.png"
   },
-  "permissions": ["activeTab", "downloads"],
-  "background": {
-    "service_worker": "background.js"
-  },
-  "action": {
-    "default_icon": {
-      "128": "logo.png"
-    }
-  }
+  "host_permissions": ["*://*/*"],
+  "content_scripts": [{ "matches": ["<all_urls>"], "js": ["content.js"] }]
 }
