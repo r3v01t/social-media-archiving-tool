@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src * self blob: data: gap:; style-src * self 'unsafe-inline' blob: data: gap:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' blob: data: gap:; object-src * 'self' blob: data: gap:; img-src * self 'unsafe-inline' blob: data: gap:; connect-src self * 'unsafe-inline' blob: data: gap:; frame-src * self blob: data: gap:;"
+    />
+    <link rel="stylesheet" href="index.css"></head>
+  </head>
+
+  <body class="">
+    <div class="container">  <h1>SMArT - Social Media Archiving Tool</h1>
+      <button id="take-ss">Take a screenshot</button>
+      <label for="save-local">
+        <input type="checkbox" id="save-local">Save a local copy?
+      </label>
+      <img id="ss-img" alt="Captured Screenshot" style="display: none" />
+      <div id="content"></div>
+    </div>
+   </body>
+  <script src="./bundle.js"></script>
+</html>

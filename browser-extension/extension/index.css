@@ -1,0 +1,51 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  background-color: #f5f5f5;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+button#take-ss {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button#take-ss:hover {
+  background-color: #2980b9;
+}
+
+img#ss-img {
+  margin-top: 20px;
+  padding: 5px;
+  width: 300px;
+  height: 200px;
+  border-radius: 5px;
+  display: none;
+  margin: 0 auto;
+}
+
+#content {
+  font-weight: bold;
+  font-size: 1.5em;
+  text-align: center;
+}
