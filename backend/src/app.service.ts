@@ -3,13 +3,14 @@ import { utils, Provider, Contract, types, Wallet } from 'zksync-ethers';
 import { ethers } from 'ethers';
 import { WEBARCHIVE_ABI, WALLET_ABI } from './abis';
 import { CreateArchiveDTO } from './create-archive-dto';
+import { UpdateAllowListDTO } from './update-allow-list.dto';
 
 @Injectable()
 export class AppService {
-  private readonly PRIVATE_KEY = process.env.PRIVATE_KEY as string;
-  private readonly WALLET_ADDRESS = process.env.WALLET_ADDRESS as string;
-  private readonly DEPLOYED_CONTRACT_ADDRESS = process.env
-    .DEPLOYED_CONTRACT_ADDRESS as string;
+  private readonly PRIVATE_KEY = process.env.PRIVATE_KEY;
+  private readonly WALLET_ADDRESS = process.env.WALLET_ADDRESS;
+  private readonly DEPLOYED_CONTRACT_ADDRESS =
+    process.env.DEPLOYED_CONTRACT_ADDRESS;
 
   getHello(): string {
     return 'Hello World!';
@@ -96,5 +97,29 @@ export class AppService {
     } catch (error: unknown) {
       return { message: 'An error occurred!' };
     }
+  }
+
+  async updateAllowList(data: UpdateAllowListDTO) {
+    const { walletAddress, addresses } = data;
+    const provider = Provider.getDefaultProvider(types.Network.Sepolia);
+
+    const walletContract = await this.getContract(
+      provider,
+      this.WALLET_ADDRESS,
+      WALLET_ABI,
+    );
+
+    const isUserInAllowList = await walletContract.allowList(walletAddress);
+
+    if (!isUserInAllowList) {
+      return {
+        message: 'Sorry, you are not authorized!',
+      };
+    }
+
+    addresses.forEach(async (address) => {
+      const tx = await walletContract.updateAllowList(address, true);
+      await tx.wait();
+    });
   }
 }
