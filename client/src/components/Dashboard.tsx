@@ -76,6 +76,12 @@ export default function Dashboard() {
   if (!queryData || queryData.archiveCreateds.length === 0) {
     return (
       <div className="flex h-full w-full items-center justify-center">
+        <div
+          className="text-green-500 text-right mb-10 cursor-pointer"
+          onClick={() => navigate("allow-list")}
+        >
+          Want to update the allow list? (Authorized users only)
+        </div>
         <h3 className="text-2xl font-semibold text-dark-tremor-content-emphasis">
           You have no archives yet
         </h3>
