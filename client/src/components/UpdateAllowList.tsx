@@ -2,6 +2,7 @@ import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { Button, TextInput } from "@tremor/react";
 import axios from "axios";
 import { useAccount } from "wagmi";
+import { toast } from "react-toastify";
 
 interface IFormInput {
   addresses: { address: string }[];
@@ -33,13 +34,13 @@ const UpdateAllowList: React.FC = () => {
     };
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.BACKEND_URL}/update-allow-list`,
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/update-allow-list`,
         formattedData
       );
-      console.log(response.data);
+      toast.success("Addresses added to the allow list.");
     } catch (error) {
-      console.error("Error submitting form:", error);
+      toast.error("An error occurred.");
     }
   };
 
@@ -54,7 +55,7 @@ const UpdateAllowList: React.FC = () => {
         </h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           {fields.map((field, index) => (
-            <div className="flex flex-col spacy-y-4">
+            <div className="flex flex-col spacy-y-4" key={field.id}>
               <div
                 key={field.id}
                 className="flex items-center mb-2 justify-center"
