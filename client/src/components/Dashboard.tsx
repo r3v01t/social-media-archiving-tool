@@ -75,9 +75,9 @@ export default function Dashboard() {
 
   if (!queryData || queryData.archiveCreateds.length === 0) {
     return (
-      <div className="flex h-full w-full items-center justify-center">
+      <div className="flex flex-col h-full w-full items-center justify-center">
         <div
-          className="text-green-500 text-right mb-10 cursor-pointer"
+          className="text-green-500 text-right w-full mb-10 cursor-pointer"
           onClick={() => navigate("allow-list")}
         >
           Want to update the allow list? (Authorized users only)
