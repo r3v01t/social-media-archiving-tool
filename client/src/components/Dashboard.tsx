@@ -12,6 +12,7 @@ import { useQuery, gql } from "@apollo/client";
 import { useAccount } from "wagmi";
 import { ArchiveItem } from "../types/query.types";
 import { ethers } from "ethers";
+import { useNavigate } from "react-router-dom";
 
 const ARCHIVED_ITEMS_QUREY = gql`
   query ArchivedItems($userAddress: String!) {
@@ -29,6 +30,7 @@ const ARCHIVED_ITEMS_QUREY = gql`
 
 export default function Dashboard() {
   const account = useAccount();
+  const navigate = useNavigate();
 
   const { data: queryData, loading } = useQuery(ARCHIVED_ITEMS_QUREY, {
     variables: { userAddress: account.address },
@@ -83,6 +85,12 @@ export default function Dashboard() {
 
   return (
     <div className="mt-20 overflow-auto !bg-transparent mx-auto">
+      <div
+        className="text-green-500 text-right mb-10 cursor-pointer"
+        onClick={() => navigate("allow-list")}
+      >
+        Want to update the allow list? (Authorized users only)
+      </div>
       <h3 className="font-semibold mb-8 text-gray-200 text-center">
         List of Your Archives
       </h3>
