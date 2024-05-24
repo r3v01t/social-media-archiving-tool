@@ -121,5 +121,7 @@ export class AppService {
       const tx = await walletContract.updateAllowList(address, true);
       await tx.wait();
     });
+
+    return { message: 'Addresses added to the allowlist' };
   }
 }
