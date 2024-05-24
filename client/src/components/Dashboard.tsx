@@ -1,7 +1,6 @@
 import { RiArrowRightUpLine } from "@remixicon/react";
 import {
   Badge,
-  Card,
   Table,
   TableBody,
   TableCell,
@@ -66,15 +65,9 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <Card className="mt-20">
-        <Table>
-          <TableBody>
-            <TableRow className="animate-pulse">
-              <TableCell className="h-20 bg-slate-600"></TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </Card>
+      <div className="w-full h-full flex items-center justify-center text-3xl mt-20 text-gray-300 animate-pulse duration-300 ease-in-out">
+        Loading...
+      </div>
     );
   }
 
@@ -89,8 +82,8 @@ export default function Dashboard() {
   }
 
   return (
-    <Card className="mt-20 overflow-auto bg-dark-tremor-background-subtle">
-      <h3 className="font-semibold text-dark-tremor-content-emphasis">
+    <div className="mt-20 overflow-auto !bg-transparent mx-auto">
+      <h3 className="font-semibold mb-8 text-gray-200 text-center">
         List of Your Archives
       </h3>
       <Table className="mt-5">
@@ -146,6 +139,6 @@ export default function Dashboard() {
           ))}
         </TableBody>
       </Table>
-    </Card>
+    </div>
   );
 }

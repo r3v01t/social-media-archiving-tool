@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./components/Dashboard.tsx";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import UpdateAllowList from "./components/UpdateAllowList.tsx";
 
 const client = new ApolloClient({
   uri: import.meta.env.VITE_SUBGRAPH_URI,
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Layout>
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/allow-list" element={<UpdateAllowList />} />
             </Routes>
           </Layout>
         </BrowserRouter>
