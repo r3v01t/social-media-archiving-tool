@@ -118,7 +118,7 @@ export class AppService {
     }
 
     addresses.forEach(async (address) => {
-      console.log('input', address);
+      console.log('input', address, walletContract);
       const tx = await walletContract.updateAllowList(address, true);
       console.log('awaiting tx', tx);
       const x = await tx.wait();
