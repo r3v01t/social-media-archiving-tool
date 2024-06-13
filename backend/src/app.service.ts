@@ -118,8 +118,11 @@ export class AppService {
     }
 
     addresses.forEach(async (address) => {
+      console.log('input', address);
       const tx = await walletContract.updateAllowList(address, true);
-      await tx.wait();
+      console.log('awaiting tx', tx);
+      const x = await tx.wait();
+      console.log('x', x);
     });
 
     return { message: 'Addresses added to the allowlist' };
