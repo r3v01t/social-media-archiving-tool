@@ -12,7 +12,6 @@ import { useQuery, gql } from "@apollo/client";
 import { useAccount } from "wagmi";
 import { ArchiveItem } from "../types/query.types";
 import { ethers } from "ethers";
-import { useNavigate } from "react-router-dom";
 
 const ARCHIVED_ITEMS_QUREY = gql`
   query ArchivedItems($userAddress: String!) {
@@ -30,7 +29,6 @@ const ARCHIVED_ITEMS_QUREY = gql`
 
 export default function Dashboard() {
   const account = useAccount();
-  const navigate = useNavigate();
 
   const { data: queryData, loading } = useQuery(ARCHIVED_ITEMS_QUREY, {
     variables: { userAddress: account.address },
