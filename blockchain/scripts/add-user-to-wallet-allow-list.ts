@@ -19,10 +19,10 @@ export default async function addUserToWallet() {
     getWallet(process.env.WALLET_PRIVATE_KEY) // Interact with the contract on behalf of this wallet
   );
 
-  const userAddress = "";
+  const userAddress = "0x647D43e58f5cb81485ED7BB3dDC806bCD27d5614";
   const status = true;
 
-  const transaction = await contract.updateAlowList(userAddress, status);
+  const transaction = await contract.updateAllowList(userAddress, status);
   console.log(`Transaction hash: ${transaction.hash}`);
 
   // Wait until transaction is processed

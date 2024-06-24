@@ -76,30 +76,30 @@ export default function Dashboard() {
   if (!queryData || queryData.archiveCreateds.length === 0) {
     return (
       <div className="flex flex-col h-full w-full items-center justify-center">
-        <div
+        {/* <div
           className="text-green-500 text-right w-full mb-10 cursor-pointer"
           onClick={() => navigate("allow-list")}
         >
           Want to update the allow list? (Authorized users only)
-        </div>
+        </div> */}
         <h3 className="text-2xl font-semibold text-dark-tremor-content-emphasis">
-          You have no archives yet
+          You have not archived anything yet
         </h3>
       </div>
     );
   }
 
   return (
-    <div className="mt-20 overflow-auto !bg-transparent mx-auto">
-      <div
+    <div className="mt-20 overflow-auto  mx-auto">
+      {/* <div
         className="text-green-500 text-right mb-10 cursor-pointer"
         onClick={() => navigate("allow-list")}
       >
         Want to update the allow list? (Authorized users only)
-      </div>
-      <h3 className="font-semibold mb-8 text-gray-200 text-center">
+      </div> */}
+      {/* <h3 className="font-semibold mb-8 text-gray-200 text-center">
         List of Your Archives
-      </h3>
+      </h3> */}
       <Table className="mt-5">
         <TableHead>
           <TableRow>
